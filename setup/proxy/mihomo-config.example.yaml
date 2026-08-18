@@ -1,0 +1,32 @@
+# mihomo 代理配置 — 已脱敏参考版 (scrubbed reference)
+#
+# 原始配置由 GHelper 的 Clash 订阅自动生成，包含约 20+ 个节点及其密码
+# （Shadowsocks/VLESS password/uuid）。这些属于**付费机场订阅凭证**，已从本参考副本
+# 中移除，避免随项目提交进 git。
+#
+# 生成真实配置的方法：运行同目录 `proxy-update.cmd`，填入你自己的订阅链接
+#   set SUB_URL=<YOUR_GHELPER_CLASH_SUBSCRIPTION_URL>
+# 或直接使用 <用户名> PC 上常驻的 `%LOCALAPPDATA%\mihomo\config.yaml`。
+#
+# 结构（真实文件会包含）：
+# mixed-port: 7890
+# external-controller: 127.0.0.1:9090
+# proxy-providers:
+#   ghelper:
+#     type: http
+#     url: "<YOUR_GHELPER_CLASH_SUBSCRIPTION_URL>"
+#     interval: 3600
+#     path: ./ghelper.yaml
+# proxy-groups:
+#   - name: "AI专用"        # 固定选日本/美国节点
+#     type: select
+#     use: [ghelper]
+# rules:
+#   - DOMAIN-SUFFIX,openai.com,AI专用
+#   - DOMAIN-SUFFIX,chatgpt.com,AI专用
+#   - DOMAIN-SUFFIX,oaistatic.com,AI专用
+#   - DOMAIN-SUFFIX,oaiusercontent.com,AI专用
+#   - MATCH,DIRECT
+#
+# 说明：codex CLI 走 `127.0.0.1:7890` 这个本地代理到达 chatgpt.com 后端；
+# 其余流量 DIRECT（国内直连）。

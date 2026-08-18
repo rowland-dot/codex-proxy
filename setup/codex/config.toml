@@ -1,0 +1,83 @@
+# ============================================================
+# Codex CLI 配置 - 由 WorkBuddy 部署
+# 默认使用 ChatGPT Pro 订阅（透明走本地 mihomo 通道，无需手动操作）
+# 备用：codex --profile deepseek  （DeepSeek 云端）
+# ============================================================
+
+# ── 默认模型配置（ChatGPT Pro 订阅，内置路由）──────────
+# 使用 Codex 内置 "openai" provider，ChatGPT OAuth 自动路由到
+# chatgpt.com/backend-api/codex/responses（无需 api.responses.write 权限）
+# 不指定 model，使用 Codex 自动选择的默认模型
+model_provider = "openai"
+model_reasoning_effort = "high"
+
+# ── 备用入口：codex --profile deep（读取 deep.config.toml）─
+
+# ── 安全边界 ─────────────────────────────────────────────
+sandbox_mode = "workspace-write"
+approval_policy = "on-request"
+
+# ── 沙箱微调（OpenAI 模式需要网络访问）────────────────
+[sandbox_workspace_write]
+network_access = true
+
+# ── DeepSeek 云端 Provider（协议直连，无需中转）─────────
+[model_providers.deepseek]
+name = "DeepSeek"
+base_url = "https://api.deepseek.com/v1"
+wire_api = "responses"
+requires_openai_auth = false
+env_key = "DEEPSEEK_API_KEY"
+request_max_retries = 4
+stream_idle_timeout_ms = 300000
+
+# ── Ollama 本地 Provider（离线可用）─────────────────────
+[model_providers.ollama-local]
+name = "Ollama Local"
+base_url = "http://localhost:11434/v1"
+wire_api = "responses"
+requires_openai_auth = false
+request_max_retries = 2
+stream_idle_timeout_ms = 600000
+
+[marketplaces.openai-bundled]
+last_updated = "2026-08-18T06:19:07Z"
+source_type = "local"
+source = '\\?\C:\Users\<用户名>\.codex\.tmp\bundled-marketplaces\openai-bundled'
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-08-18T03:04:24Z"
+source_type = "local"
+source = '\\?\C:\Users\<用户名>\.cache\codex-runtimes\codex-primary-runtime\plugins\openai-primary-runtime'
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[desktop]
+followUpQueueMode = "queue"
+localeOverride = "zh-CN"
+conversationDetailMode = "STEPS_COMMANDS"
+
+[windows]
+sandbox = "unelevated"
+
+# 说明：codex 会在此文件自动追加 [projects.<路径>] 本机信任记录，属机器本地状态，
+# 不应提交进公共仓库，已从本模板移除。

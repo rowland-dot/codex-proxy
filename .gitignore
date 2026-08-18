@@ -1,0 +1,31 @@
+# ══════════════════════════════════════════════════════════════════
+#  公开可提交 (commit to GitHub):  README.md · docs/ · setup/ (已脱敏)
+#  本地保密 (local only, 个人复用):  secrets/  —— 真实订阅/节点密码/安装包
+# ══════════════════════════════════════════════════════════════════
+
+# secrets/ 内只提交说明文件，真实密钥一律忽略
+secrets/*
+!secrets/README.md
+
+# 兜底：这些文件无论在哪都不提交 (never commit anywhere)
+**/ghelper_sub.yaml
+**/ghelper_pac.js
+**/auth.json
+**/auth.json.broken
+**/sf_api_key
+**/*.secret
+
+# 二进制 / 安装包 / 大文件 (binaries, installers)
+*.exe
+*.zip
+*.7z
+*.dll
+
+# 运行时 / 缓存 (runtime, caches)
+**/generated_images/
+**/cache.db
+.workbuddy/
+
+# 系统 / 编辑器 (OS, editor)
+.DS_Store
+Thumbs.db

@@ -1,0 +1,4 @@
+# 本地离线模式：codex --profile ollama
+model_provider = "ollama-local"
+model = "gpt-oss:20b"
+model_reasoning_effort = "medium"
